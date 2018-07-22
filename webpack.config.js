@@ -1,7 +1,12 @@
 const path = require('path');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
+const htmlWebpackPlugin = new HtmlWebPackPlugin({
+  template: path.resolve(__dirname, 'src/index.html'),
+  filename: 'index.html'
+});
 
 module.exports = {
-  mode: 'development',
   entry: {
     main: [
       path.resolve(__dirname, 'src/index.js')
@@ -9,13 +14,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
-    //filename: '[name].[hash].js'
-    filename: '[name].js'
+    filename: '[name].js' //'[name].[hash].js'
   },
   devServer: {
-    contentBase: path.join(__dirname, 'build'),
-    compress: true,
     port: 3000
-  }
+  },
+  plugins: [htmlWebpackPlugin]
 };
