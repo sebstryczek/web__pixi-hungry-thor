@@ -7,10 +7,23 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
+  devtool: 'inline-source-map',
   entry: {
     main: [
-      path.resolve(__dirname, 'src/index.js')
+      path.resolve(__dirname, 'src/index.ts')
     ]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      }
+    ]
+  },
+  resolve: {
+    extensions: [ '.ts', '.js' ]
   },
   output: {
     path: path.resolve(__dirname, 'build'),
