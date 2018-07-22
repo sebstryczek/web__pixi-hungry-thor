@@ -1,0 +1,33 @@
+{
+  "name": "web__pixi-hungry-thor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start:dev": "webpack-dev-server --mode development --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebstryczek/web__pixi-hungry-thor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sebstryczek/web__pixi-hungry-thor/issues"
+  },
+  "homepage": "https://github.com/sebstryczek/web__pixi-hungry-thor#readme",
+  "dependencies": {
+    "@types/pixi.js": "^4.8.0",
+    "html-webpack-plugin": "^3.2.0",
+    "pixi.js": "^4.8.1",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.1.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^4.4.2",
+    "typescript": "^2.9.2",
+    "webpack-dev-server": "^3.1.4"
+  }
+}
