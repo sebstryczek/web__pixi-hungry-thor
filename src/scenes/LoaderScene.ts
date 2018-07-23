@@ -1,17 +1,15 @@
 import * as PIXI from 'pixi.js';
-const hd = window.devicePixelRatio === 2 ? "@2x" : "";
+import Scene from '../Scene';
 
-export default class LoaderScene {
+export default class LoaderScene extends Scene {
   loader: PIXI.loaders.Loader;
-
-  load() : void {
+  
+  load() : PIXI.Container {
+    const container = new PIXI.Container();
     this.loader = PIXI.loader;
-    this.loader.add('knight', './assets/knight/knight.png');
+    this.loader.add('knight', './assets/Knight.png');
 
     this.loader.load((loader : PIXI.loaders.Loader, resources : any) => {
-      const app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
-      document.body.appendChild(app.view);
-
       const knightAtlas = resources.knight.texture;
       const knightTextures = [];
 
@@ -30,12 +28,12 @@ export default class LoaderScene {
       }
       
       const idle = new PIXI.extras.AnimatedSprite([ knightTextures[0], knightTextures[1], knightTextures[2], knightTextures[3] ]);
-      idle.x = app.screen.width / 2;
-      idle.y = app.screen.height / 2;
+      idle.x = 100;
+      idle.y = 100;
       idle.anchor.set(0.5);
       idle.animationSpeed = 0.1;
       idle.play();
-      app.stage.addChild(idle);
+      container.addChild(idle);
       
       //const s = new PIXI.Sprite(t);
       //s.anchor.set(0.5);
@@ -43,5 +41,6 @@ export default class LoaderScene {
       //s.y = app.screen.height / 2;
       //app.stage.addChild(s);
     });
+    return container;
   }
 }

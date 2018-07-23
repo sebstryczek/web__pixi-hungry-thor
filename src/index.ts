@@ -1,7 +1,3 @@
-// interface TestInterface {
-//   testString: string;
-// }
-
 // class TestClass implements TestInterface {
 //   testString: string;
 
