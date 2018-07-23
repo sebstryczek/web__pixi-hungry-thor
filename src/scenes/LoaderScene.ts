@@ -1,47 +1,56 @@
 import * as PIXI from 'pixi.js';
-const hd = window.devicePixelRatio === 2 ? "@2x" : "";
+import Scene from '../Scene';
+import Store from '../Store';
+import Assets from '../state/Assets';
 
-export default class LoaderScene {
-  loader: PIXI.loaders.Loader;
+export default class LoaderScene extends Scene {
+  private loader: PIXI.loaders.Loader;
+  private onLoadedCallback: Function = null;
 
-  load() : void {
+  onLoaded(callback: Function) {
+    this.onLoadedCallback = callback;
+  }
+
+  splitTexture(texture: PIXI.BaseTexture, width: number, height: number): PIXI.Texture[] {
+    const result: PIXI.Texture[] = [];
+    const colsNumber = texture.width / width;
+    const rowsNumber = texture.height / height;
+
+    for (let rowIndex = 0; rowIndex < rowsNumber; rowIndex++) {
+      for (let colIndex = 0; colIndex < colsNumber; colIndex++) {
+        const rect = new PIXI.Rectangle(colIndex * width, rowIndex * height, width, height);
+        const tex = new PIXI.Texture(texture, rect);
+        result.push(tex);
+      }
+    }
+
+    return result;
+  }
+  
+  init(store: Store) : void {
     this.loader = PIXI.loader;
-    this.loader.add('knight', './assets/knight/knight.png');
+    this.loader.add('food', './assets/Food.png');
+    this.loader.add('knight', './assets/Knight.png');
 
     this.loader.load((loader : PIXI.loaders.Loader, resources : any) => {
-      const app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
-      document.body.appendChild(app.view);
+      const { knight, food } = resources;
+      const foodTextures: PIXI.Texture[] = this.splitTexture(food.texture, 16, 16);
+      const knightTextures: PIXI.Texture[] = this.splitTexture(knight.texture, 84, 84);
+      const knightTexturesIdle: PIXI.Texture[] = knightTextures.slice(0, 4);
+      const assets = new Assets(
+        foodTextures,
+        knightTexturesIdle
+      );
 
-      const knightAtlas = resources.knight.texture;
-      const knightTextures = [];
+      store.setState(assets);
 
-      const width = 84;
-      const height = 84;
-
-      const colsNumber = knightAtlas.width / width;
-      const rowsNumber = knightAtlas.height / height;
-      
-      for (let rowIndex = 0; rowIndex < rowsNumber; rowIndex++) {
-        for (let colIndex = 0; colIndex < colsNumber; colIndex++) {
-          const rect = new PIXI.Rectangle(colIndex * width, rowIndex * height, width, height);
-          const tex = new PIXI.Texture(knightAtlas, rect);
-          knightTextures.push(tex);
-        }
+      if (this.onLoadedCallback) {
+        this.onLoadedCallback();
       }
-      
-      const idle = new PIXI.extras.AnimatedSprite([ knightTextures[0], knightTextures[1], knightTextures[2], knightTextures[3] ]);
-      idle.x = app.screen.width / 2;
-      idle.y = app.screen.height / 2;
-      idle.anchor.set(0.5);
-      idle.animationSpeed = 0.1;
-      idle.play();
-      app.stage.addChild(idle);
-      
-      //const s = new PIXI.Sprite(t);
-      //s.anchor.set(0.5);
-      //s.x = app.screen.width / 2;
-      //s.y = app.screen.height / 2;
-      //app.stage.addChild(s);
     });
+  }
+
+  update(deltaTime : number) : void {
+    console.log(this.loader.progress)
   }
 }

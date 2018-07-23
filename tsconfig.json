@@ -4,7 +4,11 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "es6",
-    "target": "es5",
-    "allowJs": true
-  }
+    "target": "es6",
+    "typeRoots": ["node_modules/@types"],
+    "experimentalDecorators": true,
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
