@@ -1,41 +1,44 @@
 import * as PIXI from 'pixi.js';
 import Scene from './Scene';
+import LoaderScene from './scenes/LoaderScene';
+import Store from './Store';
 
 export default class ScenesManager {
-  private _scene : Scene = null;
-  get scene() : Scene {
+  private _scene: Scene = null;
+
+  get scene(): Scene {
     return this._scene;
   }
 
-  constructor(renderer : PIXI.WebGLRenderer | PIXI.CanvasRenderer) {
-    /*
-      super();
-      this.renderer = renderer;
-      this.scenes = [];
-
-      this._fixedWidth = 0;
-      this._fixedHeight = 0;
-
-      this._last = 0;
-
-      this.scene = new Scene('initial');
-    */
+  get display(): PIXI.Container {
+    return this._scene.display;
   }
 
-  update(delta : number) : void {
+  private scenes: Scene[] = [];
+
+  update(deltaTime: number): void {
+    if (this._scene) {
+      this._scene.update(deltaTime);
+    }
   }
-  
-  addScene(scene : Scene) : void {
-    /*
-    if(this.scenes.indexOf(scene) !== -1)return this;
-    scene.manager = this;
+
+  addScene(scene: Scene): ScenesManager {
+    if (this.scenes.indexOf(scene) !== -1) {
+      return this;
+    }
     this.scenes.push(scene);
     return this;
-    */
-  }
-  
-  loadScene(scene : Scene) : void {
-
   }
 
+  runScene(sceneName: string, store: Store): void {
+    const foundScene: Scene = this.scenes.find(
+      (x: Scene) => x.constructor.name === sceneName
+    );
+    
+    if (foundScene) {
+      foundScene.init(store);
+    }
+    
+    this._scene = foundScene;
+  }
 }

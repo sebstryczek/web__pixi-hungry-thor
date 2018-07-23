@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('./node_modules/@types/copy-webpack-plugin/index');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
   template: path.resolve(__dirname, 'src/index.html'),
