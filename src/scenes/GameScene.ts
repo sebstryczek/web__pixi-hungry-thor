@@ -3,32 +3,39 @@ import Scene from './Scene';
 import Store from '../store/Store';
 import InputManager from '../managers/InputManager';
 import KeyCode from '../enums/KeyCode';
+import Player from '../Player';
 
 export default class GameScene extends Scene {
-  private idle:PIXI.extras.AnimatedSprite;
   private inputManager: InputManager = new InputManager();
+  private player: Player = null;
 
   init(): void {
     const { width, height } = this.store.config.viewport;
-    const idle = new PIXI.extras.AnimatedSprite( this.store.state.assets.knightTexturesIdle );
-    idle.x = width / 2;
-    idle.y = height - 100;
-    idle.anchor.set(0.5);
-    idle.animationSpeed = 0.1;
-    idle.play();
-    this.idle = idle;
-
-    this.display.addChild(idle);
+    
+    this.player = new Player(
+      this.store.state.assets.knightTexturesIdle,
+      this.store.state.assets.knightTexturesLeft,
+      this.store.state.assets.knightTexturesRight
+    );
+    this.player.position.set(width / 2, height - 100);
+    
+    this.display.addChild(this.player);
   }
 
   update(deltaTime : number) : void {
+    const { width, height } = this.store.config.viewport;
+
     const leftPressed: boolean = this.inputManager.keyDown(KeyCode.LEFT);
     const rightPressed: boolean = this.inputManager.keyDown(KeyCode.RIGHT);
-    const { width, height } = this.store.config.viewport;
+    
     const axisX: number = (leftPressed ? -1 : 0) + (rightPressed ? 1 : 0);
-    const positionX: number = this.idle.position.x + axisX * deltaTime;
-    if (positionX > 0 && positionX < width) {
-      this.idle.position.x = positionX;
+    this.player.setPlayerState(axisX);
+    
+    const minPosX = 0;
+    const maxPosX = this.store.config.viewport.width;
+    const positionX: number = this.player.position.x + axisX * deltaTime;
+    if (positionX > minPosX && positionX < maxPosX) {
+      this.player.position.x = positionX;
     }
   }
 }
