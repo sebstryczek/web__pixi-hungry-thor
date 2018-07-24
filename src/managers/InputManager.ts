@@ -1,4 +1,4 @@
-import KeyCode from './enums/KeyCode';
+import KeyCode from '../enums/KeyCode';
 
 export default class InputManager {
   private pressedKeys: KeyCode[] = [];

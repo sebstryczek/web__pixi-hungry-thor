@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import Scene from '../Scene';
+import Scene from './Scene';
 import Store from '../store/Store';
 import Assets from '../store/state/Assets';
 
@@ -27,7 +27,7 @@ export default class LoaderScene extends Scene {
     return result;
   }
   
-  init(store: Store) : void {
+  init() : void {
     this.loader = PIXI.loader;
     this.loader.add('food', './assets/Food.png');
     this.loader.add('knight', './assets/Knight.png');
@@ -42,7 +42,7 @@ export default class LoaderScene extends Scene {
         knightTexturesIdle
       );
 
-      store.setState(assets);
+      this.store.setState(assets);
 
       if (this.onLoadedCallback) {
         this.onLoadedCallback();
