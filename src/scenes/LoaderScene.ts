@@ -37,9 +37,13 @@ export default class LoaderScene extends Scene {
       const foodTextures: PIXI.Texture[] = this.splitTexture(food.texture, 16, 16);
       const knightTextures: PIXI.Texture[] = this.splitTexture(knight.texture, 84, 84);
       const knightTexturesIdle: PIXI.Texture[] = knightTextures.slice(0, 4);
+      const knightTexturesLeft: PIXI.Texture[] = knightTextures.slice(20, 26);
+      const knightTexturesRight: PIXI.Texture[] = knightTextures.slice(14, 20);
       const assets = new Assets(
         foodTextures,
-        knightTexturesIdle
+        knightTexturesIdle,
+        knightTexturesLeft,
+        knightTexturesRight
       );
 
       this.store.setState(assets);
@@ -51,6 +55,6 @@ export default class LoaderScene extends Scene {
   }
 
   update(deltaTime : number) : void {
-    console.log(this.loader.progress)
+    //console.log(this.loader.progress)
   }
 }
