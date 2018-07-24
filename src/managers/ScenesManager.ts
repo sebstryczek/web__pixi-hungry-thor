@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
-import Scene from './Scene';
-import LoaderScene from './scenes/LoaderScene';
-import Store from './Store';
+import Scene from '../scenes/Scene';
+import LoaderScene from '../scenes/LoaderScene';
+import Store from '../store/Store';
 
 export default class ScenesManager {
   private _scene: Scene = null;
@@ -30,13 +30,13 @@ export default class ScenesManager {
     return this;
   }
 
-  runScene(sceneName: string, store: Store): void {
+  runScene(sceneName: string): void {
     const foundScene: Scene = this.scenes.find(
       (x: Scene) => x.constructor.name === sceneName
     );
     
     if (foundScene) {
-      foundScene.init(store);
+      foundScene.init();
     }
     
     this._scene = foundScene;
