@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import LoaderScene from './scenes/LoaderScene';
 import ScenesManager from './ScenesManager';
 import GameScene from './scenes/GameScene';
-import Store from './Store';
+import Store from './store/Store';
 
 export default class Game {
   private renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
@@ -10,7 +10,8 @@ export default class Game {
   private store: Store = new Store();
 
   initialize(): void {
-    this.renderer = PIXI.autoDetectRenderer(800, 600, {backgroundColor : 0x1099bb});
+    const { width, height } = this.store.config.viewport;
+    this.renderer = PIXI.autoDetectRenderer(width, height);
     document.body.appendChild(this.renderer.view);
     
     PIXI.ticker.shared
@@ -33,7 +34,7 @@ export default class Game {
   }
 
   update(deltaTime : number) {
-    this.scenesManager.update(deltaTime);
+    this.scenesManager.update(deltaTime, this.store);
   }
 
   render() {

@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Scene from '../Scene';
-import Store from '../Store';
-import Assets from '../state/Assets';
+import Store from '../store/Store';
+import Assets from '../store/state/Assets';
 
 export default class LoaderScene extends Scene {
   private loader: PIXI.loaders.Loader;

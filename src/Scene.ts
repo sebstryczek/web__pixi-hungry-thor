@@ -1,4 +1,4 @@
-import Store from "./Store";
+import Store from "./store/Store";
 
 export default abstract class Scene {
   private _display: PIXI.Container;
@@ -12,5 +12,5 @@ export default abstract class Scene {
   
   public abstract init(store: Store): void;
   
-  public abstract update(deltaTime: number): void;
+  public abstract update(deltaTime: number, store: Store): void;
 }

@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Scene from './Scene';
 import LoaderScene from './scenes/LoaderScene';
-import Store from './Store';
+import Store from './store/Store';
 
 export default class ScenesManager {
   private _scene: Scene = null;
@@ -16,9 +16,9 @@ export default class ScenesManager {
 
   private scenes: Scene[] = [];
 
-  update(deltaTime: number): void {
+  update(deltaTime: number, store: Store): void {
     if (this._scene) {
-      this._scene.update(deltaTime);
+      this._scene.update(deltaTime, store);
     }
   }
 
