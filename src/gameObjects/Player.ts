@@ -1,10 +1,9 @@
 import * as PIXI from 'pixi.js';
 import FramesAnimation from './FramesAnimation';
-import GameObject from '../core/GameObject';
-import Store from '../store/Store';
 import Food from './FoodItem';
+import GameObject from '../core/GameObject';
 
-export default class Player extends PIXI.Container {
+export default class Player extends GameObject {
   private currAnim: FramesAnimation;
   public animIdle: FramesAnimation;
   private animLeft: FramesAnimation;
@@ -46,15 +45,6 @@ export default class Player extends PIXI.Container {
 
     this.currAnim = anim;
     this.currAnim.play();
-  }
-
-  public isColliding(other: Food): boolean {
-    const rect = this.getBounds();
-    const otherRect = other.getBounds();
-    return rect.x + rect.width > otherRect.x &&
-      rect.x < otherRect.x + otherRect.width &&
-      rect.y + rect.height > otherRect.y &&
-      rect.y < otherRect.y + otherRect.height;
   }
 
   public applyAxisX(axisX: number): Player {

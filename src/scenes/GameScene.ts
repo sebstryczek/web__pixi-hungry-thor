@@ -2,7 +2,6 @@ import Scene from '../core/Scene';
 import InputManager from '../managers/InputManager';
 import Player from '../gameObjects/Player';
 import FoodItem from '../gameObjects/FoodItem';
-import Score from '../store/state/Score';
 import UiManager from '../managers/UiManager';
 import FoodItemList from '../gameObjects/FoodItemsList';
 import LoopsManager from '../managers/LoopsManager';
@@ -16,41 +15,43 @@ export default class GameScene extends Scene {
   private foodItemsList: FoodItemList = null;
 
   init(): void {
-    const { width, height } = this.store.config.viewport;
+    const width = this.state.viewportWidth.value;
+    const height = this.state.viewportHeight.value;
 
     this.inputManager = new InputManager();
     this.loopsManager = new LoopsManager();
 
     this.uiManager = new UiManager(width, height);
-    this.uiManager.uiCanvas.setParent(this.display);
+    this.uiManager.uiCanvas.setParent(this);
     this.uiManager.setUiPoints('0');
     this.uiManager.setUiMissed('0');
     this.uiManager.hideUiGameOver();
 
     this.player = new Player(
-      this.store.state.assets.knightTexturesIdle,
-      this.store.state.assets.knightTexturesLeft,
-      this.store.state.assets.knightTexturesRight
+      this.state.knightTexturesIdle.value,
+      this.state.knightTexturesLeft.value,
+      this.state.knightTexturesRight.value
     );
     this.player.position.set(width / 2, height - 100);
-    this.player.setParent(this.display);
+    this.player.setParent(this);
 
-    const foodTextures = this.store.state.assets.foodTextures;
-    const maxPosX = this.store.config.viewport.width;
-    this.foodItemsList = new FoodItemList(foodTextures, maxPosX);
-    this.foodItemsList.setParent(this.display);
+    this.foodItemsList = new FoodItemList(
+      this.state.foodTextures.value,
+      width
+    );
+    this.foodItemsList.setParent(this);
 
     this.loopsManager
       .registerLoop(() => this.foodItemsList.create(), 1);
     
-    this.isStarted = true;
+    this.play();
   }
 
   public update(deltaTime: number): void {
-    if (!this.isStarted) return;
+    if (this.isPaused) return;
 
-    const width: number = this.store.config.viewport.width;
-    const height: number = this.store.config.viewport.height;
+    const width = this.state.viewportWidth.value;
+    const height = this.state.viewportHeight.value;
     const axisX: number = this.inputManager.getAxisX();
 
     this.player
@@ -76,23 +77,21 @@ export default class GameScene extends Scene {
 
   private foodCatched(foodItem: FoodItem) {
     this.foodItemsList.remove(foodItem);
-    const { points, missed } = this.store.state.score;
-    this.store.setState(new Score(points + 1, missed));
-    this.uiManager.setUiPoints(this.store.state.score.points.toString());
+    this.state.points.set(this.state.points.value + 1);
+    this.uiManager.setUiPoints(this.state.points.value.toString());
   }
 
   private foodMissed(foodItem: FoodItem) {
     this.foodItemsList.remove(foodItem);
-    const { points, missed } = this.store.state.score;
-    this.store.setState(new Score(points, missed + 1));
-    this.uiManager.setUiMissed(this.store.state.score.missed.toString());
-    if (this.store.state.score.missed >= 10) {
+    this.state.missed.set(this.state.missed.value + 1);
+    this.uiManager.setUiMissed(this.state.missed.value.toString());
+    if (this.state.missed.value >= 10) {
       this.gameOver();
     }
   }
 
   private gameOver() {
-    this.uiManager.showUiGameOver(this.store.state.score.points.toString());
-    this.isStarted = false;
+    this.uiManager.showUiGameOver(this.state.points.value.toString());
+    this.pause();
   }
 }

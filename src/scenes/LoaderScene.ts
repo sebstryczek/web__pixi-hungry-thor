@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js';
 import Scene from '../core/Scene';
-import Assets from '../store/state/Assets';
 
 export default class LoaderScene extends Scene {
   private loader: PIXI.loaders.Loader;
@@ -38,15 +37,12 @@ export default class LoaderScene extends Scene {
       const knightTexturesIdle: PIXI.Texture[] = knightTextures.slice(0, 4);
       const knightTexturesLeft: PIXI.Texture[] = knightTextures.slice(20, 26);
       const knightTexturesRight: PIXI.Texture[] = knightTextures.slice(14, 20);
-      const assets = new Assets(
-        foodTextures,
-        knightTexturesIdle,
-        knightTexturesLeft,
-        knightTexturesRight
-      );
 
-      this.store.setState(assets);
-
+      this.state.foodTextures.set(foodTextures);
+      this.state.knightTexturesIdle.set(knightTexturesIdle);
+      this.state.knightTexturesLeft.set(knightTexturesLeft);
+      this.state.knightTexturesRight.set(knightTexturesRight);
+      
       if (this.onLoadedCallback) {
         this.onLoadedCallback();
       }

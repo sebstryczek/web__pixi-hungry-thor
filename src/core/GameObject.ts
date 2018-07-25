@@ -1,12 +1,14 @@
-import Store from "../store/Store";
-
 export default abstract class GameObject extends PIXI.Container {
-  protected store: Store;
-
-  constructor(store: Store) {
-    super();
-    this.store = store;
-  }
+  public init?(): void;
   
-  public abstract update(deltaTime: number): void;
+  public update?(deltaTime: number): void;
+
+  public isColliding(other: GameObject): boolean {
+    const rect = this.getBounds();
+    const otherRect = other.getBounds();
+    return rect.x + rect.width > otherRect.x &&
+      rect.x < otherRect.x + otherRect.width &&
+      rect.y + rect.height > otherRect.y &&
+      rect.y < otherRect.y + otherRect.height;
+  }
 }

@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
+import GameObject from '../core/GameObject';
 
-export default class FoodItem extends PIXI.Container {
+export default class FoodItem extends GameObject {
   private sprite: PIXI.Sprite;
   
   constructor(texture: PIXI.Texture, position: PIXI.Point) {
