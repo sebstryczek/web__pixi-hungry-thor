@@ -1,10 +1,11 @@
 import Store from "../store/Store";
 
 export default abstract class Scene {
+  protected isStarted: boolean = false;
   protected store: Store;
 
   private _display: PIXI.Container;
-  get display() {
+  get display(): PIXI.Container {
     return this._display;
   }
 

@@ -36,7 +36,7 @@ export default class Game {
   }
 
   update(deltaTime : number) {
-    this.scenesManager.update(deltaTime);
+    this.scenesManager.update(PIXI.ticker.shared.elapsedMS);
   }
 
   render() {

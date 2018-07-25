@@ -1,15 +1,16 @@
 import * as PIXI from 'pixi.js';
 
-export default class FramesAnimation {
+export default class FramesAnimation extends PIXI.Container {
   private animatedSprite: PIXI.extras.AnimatedSprite;
   
-  constructor(frames: PIXI.Texture[], parent: PIXI.Container) {
+  constructor(frames: PIXI.Texture[]) {
+    super();
     this.animatedSprite = new PIXI.extras.AnimatedSprite(frames);
     this.animatedSprite.animationSpeed = 0.1;
     this.animatedSprite.anchor.set(0.5);
     this.animatedSprite.visible = false;
 
-    parent.addChild(this.animatedSprite);
+    this.addChild(this.animatedSprite);
   }
 
   public play(): void {

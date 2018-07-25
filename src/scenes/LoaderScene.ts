@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js';
-import Scene from './Scene';
-import Store from '../store/Store';
+import Scene from '../core/Scene';
 import Assets from '../store/state/Assets';
 
 export default class LoaderScene extends Scene {
