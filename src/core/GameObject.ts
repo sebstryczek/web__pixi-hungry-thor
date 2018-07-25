@@ -1,11 +1,11 @@
-import Store from "../store/Store";
+import State from "../state/State";
 
 export default abstract class GameObject extends PIXI.Container {
-  protected store: Store;
+  protected state: State;
 
-  constructor(store: Store) {
+  constructor(state: State) {
     super();
-    this.store = store;
+    this.state = state;
   }
   
   public abstract update(deltaTime: number): void;

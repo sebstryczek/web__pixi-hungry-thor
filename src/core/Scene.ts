@@ -1,16 +1,16 @@
-import Store from "../store/Store";
+import State from "../state/State";
 
 export default abstract class Scene {
   protected isStarted: boolean = false;
-  protected store: Store;
+  protected readonly state: State;
 
   private _display: PIXI.Container;
   get display(): PIXI.Container {
     return this._display;
   }
 
-  constructor(store: Store) {
-    this.store = store;
+  constructor(state: State) {
+    this.state = state;
     this._display = new PIXI.Container();
   }
   

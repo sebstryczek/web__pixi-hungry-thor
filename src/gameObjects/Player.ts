@@ -1,7 +1,5 @@
 import * as PIXI from 'pixi.js';
 import FramesAnimation from './FramesAnimation';
-import GameObject from '../core/GameObject';
-import Store from '../store/Store';
 import Food from './FoodItem';
 
 export default class Player extends PIXI.Container {
