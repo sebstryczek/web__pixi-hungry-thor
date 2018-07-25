@@ -1,7 +1,8 @@
 import FoodItem from './FoodItem';
 import * as PIXI from 'pixi.js';
+import GameObject from '../core/GameObject';
 
-export default class FoodItemsList extends PIXI.Container {
+export default class FoodItemsList extends GameObject {
   private foodItems: FoodItem[] = null;
   private textures: PIXI.Texture[] = null;
   private maxPosX = 0;
@@ -17,8 +18,8 @@ export default class FoodItemsList extends PIXI.Container {
     const texture = this.getRandomTexture();
     const position = this.getRandomPosition();
     const foodItem: FoodItem = new FoodItem(texture, position);
-    foodItem.setParent(this);
     this.foodItems.push(foodItem);
+    this.addChild(foodItem);
     return this;
   }
 

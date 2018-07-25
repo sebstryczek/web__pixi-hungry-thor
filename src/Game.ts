@@ -40,6 +40,6 @@ export default class Game {
   }
 
   render() {
-    this.renderer.render(this.scenesManager.display);
+    this.renderer.render(this.scenesManager.scene);
   }
 }

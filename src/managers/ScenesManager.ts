@@ -8,10 +8,6 @@ export default class ScenesManager {
     return this._scene;
   }
 
-  get display(): PIXI.Container {
-    return this._scene.display;
-  }
-
   private scenes: Scene[] = [];
 
   update(deltaTime: number): void {

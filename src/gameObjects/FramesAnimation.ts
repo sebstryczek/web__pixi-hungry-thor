@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
+import GameObject from '../core/GameObject';
 
-export default class FramesAnimation extends PIXI.Container {
+export default class FramesAnimation extends GameObject {
   private animatedSprite: PIXI.extras.AnimatedSprite;
   
   constructor(frames: PIXI.Texture[]) {

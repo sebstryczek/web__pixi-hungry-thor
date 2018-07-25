@@ -1,20 +1,20 @@
 import State from "../state/State";
+import GameObject from "./GameObject";
 
-export default abstract class Scene {
-  protected isStarted: boolean = false;
-  protected readonly state: State;
-
-  private _display: PIXI.Container;
-  get display(): PIXI.Container {
-    return this._display;
-  }
+export default abstract class Scene extends GameObject {
+  protected isPaused: boolean = true;
+  protected state: State;
 
   constructor(state: State) {
+    super();
     this.state = state;
-    this._display = new PIXI.Container();
   }
-  
-  public abstract init(): void;
-  
-  public abstract update(deltaTime: number): void;
+
+  public play(): void {
+    this.isPaused = false;
+  }
+
+  public pause(): void {
+    this.isPaused = true;
+  }
 }
