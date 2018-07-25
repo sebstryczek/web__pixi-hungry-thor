@@ -47,15 +47,6 @@ export default class Player extends GameObject {
     this.currAnim.play();
   }
 
-  public isColliding(other: Food): boolean {
-    const rect = this.getBounds();
-    const otherRect = other.getBounds();
-    return rect.x + rect.width > otherRect.x &&
-      rect.x < otherRect.x + otherRect.width &&
-      rect.y + rect.height > otherRect.y &&
-      rect.y < otherRect.y + otherRect.height;
-  }
-
   public applyAxisX(axisX: number): Player {
     this.axisX = axisX;
     return this;
