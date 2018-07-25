@@ -1,7 +1,5 @@
 import * as PIXI from 'pixi.js';
-import Scene from '../scenes/Scene';
-import LoaderScene from '../scenes/LoaderScene';
-import Store from '../store/Store';
+import Scene from '../core/Scene';
 
 export default class ScenesManager {
   private _scene: Scene = null;

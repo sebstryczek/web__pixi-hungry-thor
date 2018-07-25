@@ -32,4 +32,10 @@ export default class InputManager {
   public keyUp(key: KeyCode): boolean {
     return this.pressedKeys.indexOf(key) === -1;
   }
+
+  public getAxisX(): number {
+    const leftPressed: boolean = this.keyDown(KeyCode.LEFT);
+    const rightPressed: boolean = this.keyDown(KeyCode.RIGHT);
+    return (leftPressed ? -1 : 0) + (rightPressed ? 1 : 0);
+  }
 }
